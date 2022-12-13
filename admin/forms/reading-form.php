@@ -3,8 +3,8 @@
 // require_once "config.php";
  
 // Define variables and initialize with empty values
-$present = $previous = "";
-$present_err = $previous_err = $month_year_err = "";
+$present = $previous = $due_date = "";
+$present_err = $previous_err = $month_year_err = $due_date_err = "";
 
 $consumer_id = $_GET['consumer_id'];
 
@@ -28,6 +28,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $previous_err = "Please enter an previous.";     
     } else{
         $previous = $input_previous;
+    }
+
+    $input_due_date = trim($_POST["due_date"]);
+    if(empty($input_due_date)){
+        $due_date_err = "Please enter an due_date.";     
+    } else{
+        $due_date = $input_due_date;
     }
 
     $reading_date = date('Y-m-d H:i:s', time());
@@ -59,20 +66,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // }
 
     // Check input errors before inserting in database
-    if(empty($present_err) && empty($previous_err) && empty($month_year_err)){
+    if(empty($present_err) && empty($previous_err) && empty($month_year_err) && empty($due_date_err)){
         // Prepare an insert statement
-        $sql2 = "INSERT INTO readings (consumer_id, reading_date, previous, present, status) VALUES (?, ?, ?, ?, ?)";
+        $sql2 = "INSERT INTO readings (consumer_id, reading_date, previous, present, status, due_date) VALUES (?, ?, ?, ?, ?, ?)";
         if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
-            $sql2 = "UPDATE readings SET consumer_id=?, reading_date=?, previous=?, present=?, status=? WHERE id=?";
+            $sql2 = "UPDATE readings SET consumer_id=?, reading_date=?, previous=?, present=?, status=?, due_date=? WHERE id=?";
         }
          
         if($stmt2 = mysqli_prepare($link, $sql2)){
             // Bind variables to the prepared statement as parameters
             if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 $id =  trim($_GET["id"]);
-                mysqli_stmt_bind_param($stmt2, "sssssi", $param_consumer_id, $param_reading_date, $param_previous, $param_present, $param_status, $id);
+                mysqli_stmt_bind_param($stmt2, "ssssssi", $param_consumer_id, $param_reading_date, $param_previous, $param_present, $param_status, $param_due_date, $id);
             }else{
-                mysqli_stmt_bind_param($stmt2, "sssss", $param_consumer_id, $param_reading_date, $param_previous, $param_present, $param_status);
+                mysqli_stmt_bind_param($stmt2, "ssssss", $param_consumer_id, $param_reading_date, $param_previous, $param_present, $param_status, $param_due_date);
             }
             
             // Set parameters
@@ -81,6 +88,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $param_previous = $previous;
             $param_present = $present;
             $param_status = 0;
+            $param_due_date = $due_date;
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt2)){
@@ -122,6 +130,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     // Retrieve individual field value
                     $present = $row["present"];
                     $previous = $row["previous"];
+                    $due_date = $row["due_date"];
                 } else{
                     // URL doesn't contain valid id. Redirect to error page
                     header("location: reading.php?consumer_id=$consumer_id");
@@ -144,6 +153,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
 
 <form action="<?php echo $url ?>" method="post">
+    <div class="form-group">
+        <label>Due Date</label>
+        <input type="date" name="due_date" class="form-control <?php echo (!empty($due_date_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $due_date; ?>">
+        <span class="invalid-feedback"><?php echo $due_date_err;?></span>
+    </div>
     <div class="form-group">
         <label>Present</label>
         <input type="text" name="present" class="form-control <?php echo (!empty($present_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $present; ?>">

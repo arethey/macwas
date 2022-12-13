@@ -96,9 +96,8 @@ if(!isset($_GET["consumer_id"]) || empty(trim($_GET["consumer_id"]))){
                             echo '<table class="table table-striped">';
                                 echo "<thead>";
                                     echo "<tr>";
-                                        // echo "<th>#</th>";
-                                        echo "<th>Year</th>";
-                                        echo "<th>Month</th>";
+                                        echo "<th>Due Date</th>";
+                                        echo "<th>Date</th>";
                                         echo "<th>Present</th>";
                                         echo "<th>Previous</th>";
                                         echo "<th>Used</th>";
@@ -110,18 +109,18 @@ if(!isset($_GET["consumer_id"]) || empty(trim($_GET["consumer_id"]))){
                                 while($row = mysqli_fetch_array($result)){
                                     $status = $row['status'] == 0 ? 'Pending' : 'Paid';
                                     echo "<tr>";
-                                        // echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td class='text-uppercase'>".date_format(date_create($row['reading_date']), 'Y')."</td>";
-                                        echo "<td class='text-uppercase'>".date_format(date_create($row['reading_date']), 'F')."</td>";
+                                        echo "<td class='text-uppercase'>".date_format(date_create($row['due_date']), 'F j, Y')."</td>";
+                                        echo "<td class='text-uppercase'>".date_format(date_create($row['reading_date']), 'Y-F')."</td>";
                                         echo "<td>" . $row['present'] . "</td>";
                                         echo "<td>" . $row['previous'] . "</td>";
                                         echo "<td>" . number_format((float)$row['used'], 2, '.', '') . "</td>";
                                         echo "<td>" . $status . "</td>";
                                         echo "<td>";
-                                            echo '<a target="_blank" href="sendMail.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" class="mr-2" title="Send Billing Statement" data-toggle="tooltip"><i class="bx bx-sm bx-mail-send"></i></a>';
-                                            echo '<a target="_blank" href="print-reading.php?id='. $row['id'] .'" class="mr-2" title="Print Billing Statement" data-toggle="tooltip"><i class="bx bx-sm bxs-printer"></i></a>';
-                                            echo '<a href="reading.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" class="mr-2" title="Update Record" data-toggle="tooltip"><i class="bx bx-sm bxs-pencil" ></i></a>';
-                                            echo '<a onclick="javascript:confirmationDelete($(this));return false;" href="delete-reading.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" title="Delete Record" data-toggle="tooltip"><i class="bx bx-sm bxs-trash-alt" ></i></a>';
+                                            // echo '<a target="_blank" href="sendMail.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" class="mr-2" title="Send Billing Statement" data-toggle="tooltip"><i class="bx bx-sm bx-mail-send"></i></a>';
+                                            echo '<a target="_blank" href="print-reading.php?id='. $row['id'] .'" class="mr-2" title="Print Billing Statement" data-toggle="tooltip"><i class="bx bxs-printer"></i></a>';
+                                            echo '<a href="reading.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" class="mr-2" title="Update Record" data-toggle="tooltip"><i class="bx bxs-pencil" ></i></a>';
+                                            echo '<a onclick="javascript:confirmationDelete($(this));return false;" href="delete-reading.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" title="Delete Record" data-toggle="tooltip" class="mr-2"><i class="bx bxs-trash-alt" ></i></a>';
+                                            echo '<a onclick="javascript:confirmationPayment($(this));return false;" href="payment-reading.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" title="Payment" data-toggle="tooltip"><i class="bx bxs-dollar-circle" ></i></a>';
                                         echo "</td>";
                                     echo "</tr>";
                                 }

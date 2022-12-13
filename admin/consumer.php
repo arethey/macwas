@@ -77,12 +77,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                 echo "<td>" . $row['type'] . "</td>";
                                 echo "<td>";
                                     // echo '<a href="read.php?id='. $row['id'] .'" class="mr-3" title="View Record" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                    echo '<a href="update-consumer.php?id='. $row['id'] .'" class="mr-2" title="Update Record" data-toggle="tooltip"><i class="bx bx-sm bxs-pencil" ></i></a>';
-                                    echo '<a onclick="javascript:confirmationDelete($(this));return false;" href="delete-consumer.php?id='. $row['id'] .'" class="mr-2" title="Delete Record" data-toggle="tooltip"><i class="bx bx-sm bxs-trash-alt" ></i></a>';
+                                    echo '<a href="update-consumer.php?id='. $row['id'] .'" class="mr-2" title="Update Record" data-toggle="tooltip"><i class="bx bxs-pencil" ></i></a>';
+                                    echo '<a onclick="javascript:confirmationDelete($(this));return false;" href="delete-consumer.php?id='. $row['id'] .'" class="mr-2" title="Delete Record" data-toggle="tooltip"><i class="bx bxs-trash-alt" ></i></a>';
                                     if($row['status'] == 0){
-                                        echo '<a onclick="javascript:confirmationStatus($(this), 1);return false;" href="status-consumer.php?id='. $row['id'] .'&status=1" title="Enable Record" data-toggle="tooltip"><i class="bx bx-sm bx-show"></i></a>';
+                                        echo '<a onclick="javascript:confirmationStatus($(this), 1);return false;" href="status-consumer.php?id='. $row['id'] .'&status=1" title="Enable Record" data-toggle="tooltip"><i class="bx bx-show"></i></a>';
                                     }else{
-                                        echo '<a onclick="javascript:confirmationStatus($(this), 0);return false;" href="status-consumer.php?id='. $row['id'] .'&status=0" title="Disable Record" data-toggle="tooltip"><i class="bx bx-sm bx-hide"></i></a>';
+                                        echo '<a onclick="javascript:confirmationStatus($(this), 0);return false;" href="status-consumer.php?id='. $row['id'] .'&status=0" title="Disable Record" data-toggle="tooltip"><i class="bx bx-hide"></i></a>';
                                     }
                                 echo "</td>";
                             echo "</tr>";

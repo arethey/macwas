@@ -49,8 +49,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         echo '<table class="table table-striped">';
                             echo "<thead>";
                                 echo "<tr>";
-                                    echo "<th>Year</th>";
-                                    echo "<th>Month</th>";
+                                    echo "<th>Due Date</th>";
+                                    echo "<th>Date</th>";
                                     echo "<th>Present</th>";
                                     echo "<th>Previous</th>";
                                     echo "<th>Used</th>";
@@ -62,8 +62,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             while($row = mysqli_fetch_array($result)){
                                 $status = $row['status'] == 0 ? 'Pending' : 'Paid';
                                 echo "<tr>";
-                                    echo "<td class='text-uppercase'>".date_format(date_create($row['reading_date']), 'Y')."</td>";
-                                    echo "<td class='text-uppercase'>".date_format(date_create($row['reading_date']), 'F')."</td>";
+                                    echo "<td class='text-uppercase'>".date_format(date_create($row['due_date']), 'F j, Y')."</td>";
+                                    echo "<td class='text-uppercase'>".date_format(date_create($row['reading_date']), 'Y-F')."</td>";
                                     echo "<td>" . $row['present'] . "</td>";
                                     echo "<td>" . $row['previous'] . "</td>";
                                     echo "<td>" . number_format((float)$row['used'], 2, '.', '') . "</td>";
