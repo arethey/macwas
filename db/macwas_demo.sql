@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2022 at 08:12 AM
+-- Generation Time: Dec 14, 2022 at 04:49 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -56,6 +56,13 @@ CREATE TABLE `consumers` (
   `isUpdated` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `consumers`
+--
+
+INSERT INTO `consumers` (`id`, `name`, `barangay`, `account_num`, `registration_num`, `meter_num`, `type`, `status`, `email`, `phone`, `password`, `isUpdated`) VALUES
+(11, 'test', 'Maalat', '1', '1', '1', 'Commercial', 1, '', '9465075177', '$2y$10$m3VnZX4/Z1/OJoSqBcO/CuIpzyLL9FJKIlTXw3G//wO.9ivNWGDVe', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -68,8 +75,16 @@ CREATE TABLE `readings` (
   `reading_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `previous` float NOT NULL,
   `present` float NOT NULL,
-  `status` int(11) NOT NULL
+  `status` int(11) NOT NULL,
+  `due_date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `readings`
+--
+
+INSERT INTO `readings` (`id`, `consumer_id`, `reading_date`, `previous`, `present`, `status`, `due_date`) VALUES
+(84, 11, '2022-12-13 14:19:03', 1751.17, 1777.13, 1, '2022-12-12');
 
 -- --------------------------------------------------------
 
@@ -134,13 +149,13 @@ ALTER TABLE `complaints`
 -- AUTO_INCREMENT for table `consumers`
 --
 ALTER TABLE `consumers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `readings`
 --
 ALTER TABLE `readings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `users`
