@@ -115,11 +115,24 @@ if(!isset($_GET["consumer_id"]) || empty(trim($_GET["consumer_id"]))){
                                         echo "<td>" . $row['previous'] . "</td>";
                                         echo "<td>" . number_format((float)$row['used'], 2, '.', '') . "</td>";
                                         echo "<td>" . $status . "</td>";
-                                        echo "<td>";
+                                        echo "<td class='d-flex align-items-center' style='gap: 0.3rem'>";
+                                            ?>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class='bx bx-mail-send'></i>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                        <?php
+                                                            echo '<a target="_blank" href="send-billing-statement.php?id='. $row['id'] .'" class="dropdown-item" title="Print Billing Statement" data-toggle="tooltip">Billing Statement</a>';
+                                                            echo '<a target="_blank" href="send-notice.php?id='. $row['id'] .'" class="dropdown-item" title="Print Billing Statement" data-toggle="tooltip">Notice of Disconnection</a>';
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            <?php
                                             // echo '<a target="_blank" href="sendMail.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" class="mr-2" title="Send Billing Statement" data-toggle="tooltip"><i class="bx bx-sm bx-mail-send"></i></a>';
-                                            echo '<a target="_blank" href="print-reading.php?id='. $row['id'] .'" class="mr-2" title="Print Billing Statement" data-toggle="tooltip"><i class="bx bxs-printer"></i></a>';
-                                            echo '<a href="reading.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" class="mr-2" title="Update Record" data-toggle="tooltip"><i class="bx bxs-pencil" ></i></a>';
-                                            echo '<a onclick="javascript:confirmationDelete($(this));return false;" href="delete-reading.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" title="Delete Record" data-toggle="tooltip" class="mr-2"><i class="bx bxs-trash-alt" ></i></a>';
+                                            echo '<a target="_blank" href="print-reading.php?id='. $row['id'] .'" title="Print Billing Statement" data-toggle="tooltip"><i class="bx bxs-printer"></i></a>';
+                                            echo '<a href="reading.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" title="Update Record" data-toggle="tooltip"><i class="bx bxs-pencil" ></i></a>';
+                                            echo '<a onclick="javascript:confirmationDelete($(this));return false;" href="delete-reading.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" title="Delete Record" data-toggle="tooltip"><i class="bx bxs-trash-alt" ></i></a>';
                                             echo '<a onclick="javascript:confirmationPayment($(this));return false;" href="payment-reading.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" title="Payment" data-toggle="tooltip"><i class="bx bxs-dollar-circle" ></i></a>';
                                         echo "</td>";
                                     echo "</tr>";

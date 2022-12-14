@@ -103,6 +103,7 @@ $complaints_total = mysqli_num_rows($complaints_result);
                                         echo "<td>" . number_format((float)$row['used'], 2, '.', '') . "</td>";
                                         echo "<td>";
                                         ?>
+                                        <div class="d-flex" style="gap: 0.3rem">
                                             <div class="dropdown">
                                                 <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="bx bxs-printer"></i>
@@ -114,6 +115,18 @@ $complaints_total = mysqli_num_rows($complaints_result);
                                                     ?>
                                                 </div>
                                             </div>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class='bx bx-mail-send'></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                    <?php
+                                                        echo '<a target="_blank" href="send-billing-statement.php?id='. $row['reading_id'] .'" class="dropdown-item" title="Print Billing Statement" data-toggle="tooltip">Billing Statement</a>';
+                                                        echo '<a target="_blank" href="send-notice.php?id='. $row['reading_id'] .'" class="dropdown-item" title="Print Billing Statement" data-toggle="tooltip">Notice of Disconnection</a>';
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <?php
                                         
                                             // echo '<a target="_blank" href="sendMail.php?consumer_id='.$_GET["consumer_id"].'&id='. $row['id'] .'" class="mr-2" title="Send Billing Statement" data-toggle="tooltip"><i class="bx bx-sm bx-mail-send"></i></a>';
