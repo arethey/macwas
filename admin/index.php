@@ -18,6 +18,14 @@ $complaints_sql = "SELECT * FROM complaints;";
 $complaints_result = mysqli_query($link, $complaints_sql);
 $complaints_total = mysqli_num_rows($complaints_result);
 
+$unpaid_sql = "SELECT * FROM readings WHERE status = 0;";
+$unpaid_result = mysqli_query($link, $unpaid_sql);
+$unpaid_total = mysqli_num_rows($unpaid_result);
+
+$paid_sql = "SELECT * FROM readings WHERE status = 0;";
+$paid_result = mysqli_query($link, $paid_sql);
+$paid_total = mysqli_num_rows($paid_result);
+
 ?>
  
 <!DOCTYPE html>
@@ -63,6 +71,32 @@ $complaints_total = mysqli_num_rows($complaints_result);
                                     <small class="mb-0">Complaints</small>
                                 </div>
                                 <i class='bx bx-message-rounded-dots bx-md'></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h4 class="mb-0"><?php echo $unpaid_total; ?></h4>
+                                    <small class="mb-0">Unpaid Bills</small>
+                                </div>
+                                <i class='bx bx-money bx-md'></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h4 class="mb-0"><?php echo $paid_total; ?></h4>
+                                    <small class="mb-0">Paid Bills</small>
+                                </div>
+                                <i class='bx bx-money bx-md'></i>
                             </div>
                         </div>
                     </div>
